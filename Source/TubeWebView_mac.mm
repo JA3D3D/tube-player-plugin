@@ -188,7 +188,8 @@ struct TubeWebView::Impl
         webView.UIDelegate = handler;
         webView.allowsMagnification = NO;
         webView.allowsBackForwardNavigationGestures = NO;
-        @try { [webView setValue: @NO forKey: @"drawsBackground"]; } @catch (NSException*) {}   // no white flash
+        @try { [webView setValue: @NO forKey: @"drawsBackground"]; }   // no white flash while loading
+        @catch (NSException* e) { juce::ignoreUnused (e); }
         if (@available (macOS 13.3, *))
             webView.inspectable = YES;     // Safari > Develop can inspect the page if something goes wrong
 
