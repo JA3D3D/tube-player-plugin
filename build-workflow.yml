@@ -28,10 +28,14 @@ jobs:
           -DTP_BUILD_TESTS=ON
 
       - name: Build
-        run: cmake --build build --config Release --parallel 4
+        run: |
+          set -o pipefail
+          cmake --build build --config Release --parallel 4 2>&1 | tee build-output.log
 
       - name: Plugin tests
-        run: ./build/TubePlayerTests_artefacts/Release/TubePlayerTests
+        run: |
+          set -o pipefail
+          ./build/TubePlayerTests_artefacts/Release/TubePlayerTests 2>&1 | tee plugin-tests.log
 
       - name: Package
         run: bash scripts/package_mac.sh
@@ -42,7 +46,7 @@ jobs:
           ditto "dist/Tube Player for Mac/Tube Player.component" ~/Library/Audio/Plug-Ins/Components/"Tube Player.component"
           killall -9 AudioComponentRegistrar || true
           sleep 3
-          auval -v aufx Tube Bbtl | tee auval.log
+          auval -v aufx Tube Bbtl 2>&1 | tee auval.log
           grep -q "AU VALIDATION SUCCEEDED" auval.log
 
       - name: Get pluginval
@@ -51,9 +55,10 @@ jobs:
           unzip -q pluginval.zip
 
       - name: pluginval (VST3)
-        run: >
-          ./pluginval.app/Contents/MacOS/pluginval --strictness-level 5 --skip-gui-tests --timeout-ms 300000
-          --validate "dist/Tube Player for Mac/Tube Player.vst3"
+        run: |
+          set -o pipefail
+          ./pluginval.app/Contents/MacOS/pluginval --strictness-level 5 --skip-gui-tests --timeout-ms 300000 \
+            --validate "dist/Tube Player for Mac/Tube Player.vst3" 2>&1 | tee pluginval.log
 
       - name: pluginval with the window open (VST3 + AU)
         continue-on-error: true
@@ -69,17 +74,20 @@ jobs:
           name: Tube-Player-mac
           path: |
             dist/*.zip
-            auval.log
-            pluginval-gui.log
+            *.log
 
       # The finished zip also goes to the "builds" branch, so it can be fetched with plain git.
       - name: Publish to the builds branch
+        if: always()
         run: |
+          [ -f "dist/Tube Player for Mac.zip" ] || echo "no zip this time"
+          grep -iE "warning|error" build-output.log | grep -E "Source/|tests/" > my-warnings.log || true
           mkdir pub && cd pub
           git init -q -b builds
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          cp ../dist/*.zip .
+          cp ../dist/*.zip . 2>/dev/null || true
+          mkdir -p logs && cp ../*.log logs/ 2>/dev/null || true
           { echo "commit: $GITHUB_SHA"; echo "built: $(date -u +%Y-%m-%dT%H:%M:%SZ)"; echo "juce: $JUCE_VERSION"; } > BUILD.txt
           git add -A
           git commit -qm "Tube Player build for $GITHUB_SHA"
