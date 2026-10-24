@@ -1,0 +1,86 @@
+name: Build Tube Player
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  mac:
+    runs-on: macos-15
+    timeout-minutes: 60
+    env:
+      JUCE_VERSION: "9.0.4"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get JUCE ${{ env.JUCE_VERSION }}
+        run: git clone --depth 1 --branch "$JUCE_VERSION" https://github.com/juce-framework/JUCE.git JUCE
+
+      - name: Configure (universal: Apple Silicon + Intel)
+        run: >
+          cmake -B build -DCMAKE_BUILD_TYPE=Release
+          -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64"
+          -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0
+          -DTP_BUILD_TESTS=ON
+
+      - name: Build
+        run: cmake --build build --config Release --parallel 4
+
+      - name: Plugin tests
+        run: ./build/TubePlayerTests_artefacts/Release/TubePlayerTests
+
+      - name: Package
+        run: bash scripts/package_mac.sh
+
+      - name: Check the Audio Unit with Apple's validator
+        run: |
+          mkdir -p ~/Library/Audio/Plug-Ins/Components
+          ditto "dist/Tube Player for Mac/Tube Player.component" ~/Library/Audio/Plug-Ins/Components/"Tube Player.component"
+          killall -9 AudioComponentRegistrar || true
+          sleep 3
+          auval -v aufx Tube Bbtl | tee auval.log
+          grep -q "AU VALIDATION SUCCEEDED" auval.log
+
+      - name: Get pluginval
+        run: |
+          curl -sSL -o pluginval.zip https://github.com/Tracktion/pluginval/releases/latest/download/pluginval_macOS.zip
+          unzip -q pluginval.zip
+
+      - name: pluginval (VST3)
+        run: >
+          ./pluginval.app/Contents/MacOS/pluginval --strictness-level 5 --skip-gui-tests --timeout-ms 300000
+          --validate "dist/Tube Player for Mac/Tube Player.vst3"
+
+      - name: pluginval with the window open (VST3 + AU)
+        continue-on-error: true
+        run: |
+          ./pluginval.app/Contents/MacOS/pluginval --strictness-level 5 --timeout-ms 300000 \
+            --validate "dist/Tube Player for Mac/Tube Player.vst3" 2>&1 | tee pluginval-gui.log
+          ./pluginval.app/Contents/MacOS/pluginval --strictness-level 5 --timeout-ms 300000 \
+            --validate ~/Library/Audio/Plug-Ins/Components/"Tube Player.component" 2>&1 | tee -a pluginval-gui.log
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Tube-Player-mac
+          path: |
+            dist/*.zip
+            auval.log
+            pluginval-gui.log
+
+      # The finished zip also goes to the "builds" branch, so it can be fetched with plain git.
+      - name: Publish to the builds branch
+        run: |
+          mkdir pub && cd pub
+          git init -q -b builds
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp ../dist/*.zip .
+          { echo "commit: $GITHUB_SHA"; echo "built: $(date -u +%Y-%m-%dT%H:%M:%SZ)"; echo "juce: $JUCE_VERSION"; } > BUILD.txt
+          git add -A
+          git commit -qm "Tube Player build for $GITHUB_SHA"
+          git push -qf "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" builds
