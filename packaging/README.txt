@@ -7,25 +7,20 @@ Needs macOS 11 or newer.
 ------------------------------------------------------------
 INSTALL
 ------------------------------------------------------------
-1. Unzip the download (double-click it) if you haven't already.
-2. Double-click "Install Tube Player.command".
-   If macOS says it can't check the file ("Apple could not verify..."):
-   open System Settings > Privacy & Security, scroll down and press
-   "Open Anyway" next to Install Tube Player.command, then confirm.
-   (Or open Terminal, type  bash  and a space, drag the installer into the
-   Terminal window and press Return.)
-3. Quit Live and open it again.
-4. In Live: Settings/Preferences > Plug-Ins. Turn on "Use Audio Units" and/or
-   "Use VST3 Plug-in System Folders". If Tube Player doesn't show up,
-   press Rescan.
-5. Find it in Live's browser under Plug-Ins > Bass Bible > Tube Player and
-   drop it on any track (an empty audio track or the master is a good spot).
-   Audio passes through untouched.
+The easy way is "Tube Player.pkg" (a normal Mac installer). This folder is
+for installing by hand:
+  Tube Player.vst3       goes in  /Library/Audio/Plug-Ins/VST3
+  Tube Player.component  goes in  /Library/Audio/Plug-Ins/Components
+Move only those two (not this whole folder). Files moved by hand keep
+macOS's "downloaded from the internet" mark, which makes Live skip them;
+clear it in Terminal with:
+  xattr -dr com.apple.quarantine "/Library/Audio/Plug-Ins/VST3/Tube Player.vst3" "/Library/Audio/Plug-Ins/Components/Tube Player.component"
 
-The installer puts the plug-ins here:
-  ~/Library/Audio/Plug-Ins/VST3/Tube Player.vst3
-  ~/Library/Audio/Plug-Ins/Components/Tube Player.component
-To uninstall, delete those two.
+Then in Live: Settings (Cmd + ,) > Plug-Ins. Turn on "Use Audio Units" and
+"Use VST3 Plug-in System Folders", hold Option and click Rescan. Tube
+Player is under Plug-Ins > Bass Bible in Live's browser.
+
+To uninstall, delete those two files.
 
 ------------------------------------------------------------
 USING IT

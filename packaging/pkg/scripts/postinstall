@@ -1,0 +1,23 @@
+#!/bin/bash
+# Runs as root right after Tube Player is copied into /Library/Audio/Plug-Ins.
+
+VST3="/Library/Audio/Plug-Ins/VST3/Tube Player.vst3"
+AU="/Library/Audio/Plug-Ins/Components/Tube Player.component"
+for b in "$VST3" "$AU"; do
+  [ -e "$b" ] && xattr -dr com.apple.quarantine "$b" 2>/dev/null
+done
+
+# Earlier copies of Tube Player in your own plug-in folders (from the first installer, or
+# dragged in by hand) would show up twice or be skipped by Live. Only Tube Player's own
+# files are removed.
+CONSOLE_USER=$(stat -f%Su /dev/console 2>/dev/null)
+HOME_DIR=$(dscl . -read "/Users/$CONSOLE_USER" NFSHomeDirectory 2>/dev/null | awk '{print $2}')
+if [ -n "$HOME_DIR" ] && [ -d "$HOME_DIR/Library/Audio/Plug-Ins" ]; then
+  P="$HOME_DIR/Library/Audio/Plug-Ins"
+  rm -rf "$P/VST3/Tube Player.vst3" "$P/Components/Tube Player.component" \
+         "$P/VST3/Tube Player for Mac" "$P/Components/Tube Player for Mac"
+fi
+
+# make macOS pick up the new Audio Unit straight away
+killall -9 AudioComponentRegistrar >/dev/null 2>&1
+exit 0

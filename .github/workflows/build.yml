@@ -40,13 +40,20 @@ jobs:
       - name: Package
         run: bash scripts/package_mac.sh
 
+      # install with the real .pkg, exactly as on your Mac, then check what it installed
+      - name: Install the .pkg
+        run: |
+          sudo installer -pkg "dist/Tube Player.pkg" -target / 2>&1 | tee pkg-install.log
+          ls -la "/Library/Audio/Plug-Ins/VST3/Tube Player.vst3/Contents/MacOS" "/Library/Audio/Plug-Ins/Components/Tube Player.component/Contents/MacOS" | tee -a pkg-install.log
+          xattr -lr "/Library/Audio/Plug-Ins/VST3/Tube Player.vst3" | grep -c quarantine | xargs echo "quarantine flags:" | tee -a pkg-install.log
+
       - name: Check the Audio Unit with Apple's validator
         run: |
-          mkdir -p ~/Library/Audio/Plug-Ins/Components
-          ditto "dist/Tube Player for Mac/Tube Player.component" ~/Library/Audio/Plug-Ins/Components/"Tube Player.component"
+          set -o pipefail
           killall -9 AudioComponentRegistrar || true
           sleep 3
-          auval -v aufx Tube Bbtl 2>&1 | tee auval.log
+          auval -a 2>&1 | grep -i "tube" | tee auval.log
+          auval -v aufx Tube Bbtl 2>&1 | tee -a auval.log
           grep -q "AU VALIDATION SUCCEEDED" auval.log
 
       - name: Get pluginval
@@ -54,19 +61,19 @@ jobs:
           curl -sSL -o pluginval.zip https://github.com/Tracktion/pluginval/releases/latest/download/pluginval_macOS.zip
           unzip -q pluginval.zip
 
-      - name: pluginval (VST3)
+      - name: pluginval (installed VST3)
         run: |
           set -o pipefail
           ./pluginval.app/Contents/MacOS/pluginval --strictness-level 5 --skip-gui-tests --timeout-ms 300000 \
-            --validate "dist/Tube Player for Mac/Tube Player.vst3" 2>&1 | tee pluginval.log
+            --validate "/Library/Audio/Plug-Ins/VST3/Tube Player.vst3" 2>&1 | tee pluginval.log
 
-      - name: pluginval with the window open (VST3 + AU)
+      - name: pluginval with the window open (installed VST3 + AU)
         continue-on-error: true
         run: |
           ./pluginval.app/Contents/MacOS/pluginval --strictness-level 5 --timeout-ms 300000 \
-            --validate "dist/Tube Player for Mac/Tube Player.vst3" 2>&1 | tee pluginval-gui.log
+            --validate "/Library/Audio/Plug-Ins/VST3/Tube Player.vst3" 2>&1 | tee pluginval-gui.log
           ./pluginval.app/Contents/MacOS/pluginval --strictness-level 5 --timeout-ms 300000 \
-            --validate ~/Library/Audio/Plug-Ins/Components/"Tube Player.component" 2>&1 | tee -a pluginval-gui.log
+            --validate "/Library/Audio/Plug-Ins/Components/Tube Player.component" 2>&1 | tee -a pluginval-gui.log
 
       - uses: actions/upload-artifact@v4
         if: always()
@@ -74,19 +81,20 @@ jobs:
           name: Tube-Player-mac
           path: |
             dist/*.zip
+            dist/*.pkg
             *.log
 
       # The finished zip also goes to the "builds" branch, so it can be fetched with plain git.
       - name: Publish to the builds branch
         if: always()
         run: |
-          [ -f "dist/Tube Player for Mac.zip" ] || echo "no zip this time"
+          [ -f "dist/Tube Player.pkg" ] || echo "no installer this time"
           grep -iE "warning|error" build-output.log | grep -E "Source/|tests/" > my-warnings.log || true
           mkdir pub && cd pub
           git init -q -b builds
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          cp ../dist/*.zip . 2>/dev/null || true
+          cp ../dist/*.zip ../dist/*.pkg . 2>/dev/null || true
           mkdir -p logs && cp ../*.log logs/ 2>/dev/null || true
           { echo "commit: $GITHUB_SHA"; echo "built: $(date -u +%Y-%m-%dT%H:%M:%SZ)"; echo "juce: $JUCE_VERSION"; } > BUILD.txt
           git add -A
