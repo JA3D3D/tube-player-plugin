@@ -58,7 +58,7 @@ int main()
         int status = 0;
         auto path = server.getURL().fromFirstOccurrenceOf (juce::String (server.getPort()), false, false);
         auto body = httpGet (server.getPort(), path, status);
-        ok (status == 200 && body.contains ("TUBE <span>PLAYER</span>") && body.contains ("iframe_api"), "serves the player page");
+        ok (status == 200 && body.contains ("aria-label=\"tube player\"") && body.contains ("iframe_api"), "serves the player page");
         httpGet (server.getPort(), "/", status);
         ok (status == 404, "nothing else is served (" + juce::String (status) + ")");
         httpGet (server.getPort(), "/etc/passwd", status);
