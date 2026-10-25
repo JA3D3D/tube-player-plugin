@@ -48,6 +48,7 @@ pkgbuild --root "$PKGW/au" --component-plist "$PKGW/au.plist" --identifier com.b
   --version "$VERSION" --install-location "/Library/Audio/Plug-Ins/Components" --scripts packaging/pkg/scripts "$PKGW/au.pkg"
 sed "s/__VERSION__/$VERSION/g" packaging/pkg/distribution.xml > "$PKGW/distribution.xml"
 for f in packaging/pkg/resources/*.html; do sed "s/__VERSION__/$VERSION/g" "$f" > "$PKGW/resources/$(basename "$f")"; done
+cp brand/out/png/icon-256.png "$PKGW/resources/icon.png"
 # with a "Developer ID Installer" identity in TP_SIGN_INSTALLER the installer itself is signed too
 SIGN_PKG=()
 [ -n "${TP_SIGN_INSTALLER:-}" ] && SIGN_PKG=(--sign "$TP_SIGN_INSTALLER" --timestamp)

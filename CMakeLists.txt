@@ -28,6 +28,7 @@ juce_add_plugin(TubePlayer
     FORMATS ${TP_FORMATS}
     PRODUCT_NAME "Tube Player"
     DESCRIPTION "YouTube tutorials in a resizable plugin window"
+    ICON_BIG "${CMAKE_CURRENT_SOURCE_DIR}/brand/out/png/icon-macos-1024.png"
     IS_SYNTH FALSE
     NEEDS_MIDI_INPUT FALSE
     NEEDS_MIDI_OUTPUT FALSE
