@@ -14,6 +14,8 @@ jobs:
     timeout-minutes: 60
     env:
       JUCE_VERSION: "9.0.4"
+      # signing switches on by itself once the Apple secrets are added to the repository
+      HAVE_SIGNING: ${{ secrets.MACOS_CERTS_P12 != '' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -37,8 +39,46 @@ jobs:
           set -o pipefail
           ./build/TubePlayerTests_artefacts/Release/TubePlayerTests 2>&1 | tee plugin-tests.log
 
+      # Apple Developer ID certificates (both in one .p12) go into a temporary keychain
+      - name: Load signing certificates
+        if: env.HAVE_SIGNING == 'true'
+        env:
+          MACOS_CERTS_P12: ${{ secrets.MACOS_CERTS_P12 }}
+          MACOS_CERTS_PASSWORD: ${{ secrets.MACOS_CERTS_PASSWORD }}
+        run: |
+          KC="$RUNNER_TEMP/signing.keychain-db"; KCPW="$(uuidgen)"
+          echo "$MACOS_CERTS_P12" | base64 --decode > "$RUNNER_TEMP/certs.p12"
+          security create-keychain -p "$KCPW" "$KC"
+          security set-keychain-settings -lut 21600 "$KC"
+          security unlock-keychain -p "$KCPW" "$KC"
+          security import "$RUNNER_TEMP/certs.p12" -k "$KC" -P "$MACOS_CERTS_PASSWORD" -T /usr/bin/codesign -T /usr/bin/productbuild -T /usr/bin/pkgbuild
+          security set-key-partition-list -S apple-tool:,apple: -s -k "$KCPW" "$KC" >/dev/null
+          security list-keychains -d user -s "$KC" $(security list-keychains -d user | tr -d '"')
+          rm "$RUNNER_TEMP/certs.p12"
+          APP_ID=$(security find-identity -v -p codesigning "$KC" | grep "Developer ID Application" | head -1 | sed -E 's/.*"(.*)"/\1/')
+          INST_ID=$(security find-identity -v "$KC" | grep "Developer ID Installer" | head -1 | sed -E 's/.*"(.*)"/\1/')
+          echo "Signing as: $APP_ID / $INST_ID"
+          echo "TP_SIGN_APP=$APP_ID" >> "$GITHUB_ENV"
+          echo "TP_SIGN_INSTALLER=$INST_ID" >> "$GITHUB_ENV"
+
       - name: Package
         run: bash scripts/package_mac.sh
+
+      # Apple checks the installer for malware and approves it ("notarization"); the approval is
+      # then attached to the .pkg so it opens without warnings, even offline
+      - name: Notarize the installer
+        if: env.HAVE_SIGNING == 'true'
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
+        run: |
+          set -o pipefail
+          xcrun notarytool submit "dist/Tube Player.pkg" --apple-id "$APPLE_ID" --team-id "$APPLE_TEAM_ID" \
+            --password "$APPLE_APP_PASSWORD" --wait --timeout 30m 2>&1 | tee notarize.log
+          grep -q "status: Accepted" notarize.log
+          xcrun stapler staple "dist/Tube Player.pkg" | tee -a notarize.log
+          spctl --assess --type install -vv "dist/Tube Player.pkg" 2>&1 | tee -a notarize.log
 
       # install with the real .pkg, exactly as on your Mac, then check what it installed
       - name: Install the .pkg

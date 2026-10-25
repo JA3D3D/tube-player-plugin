@@ -16,10 +16,16 @@ ditto "$ART/VST3/Tube Player.vst3" "$OUT/Tube Player.vst3"
 ditto "$ART/AU/Tube Player.component" "$OUT/Tube Player.component"
 ditto "$ART/Standalone/Tube Player.app" "$OUT/Extras/Tube Player.app"
 
-# No Apple developer certificate: sign "ad hoc" so Apple Silicon Macs will load the code.
+# Signing: with an Apple "Developer ID Application" identity in TP_SIGN_APP the code is signed for
+# notarization (hardened runtime + secure timestamp); without one it is signed "ad hoc", which
+# Apple Silicon Macs need to load it at all.
 for b in "$OUT/Tube Player.vst3" "$OUT/Tube Player.component" "$OUT/Extras/Tube Player.app"; do
-  codesign --force --deep --sign - "$b"
-  codesign --verify --deep "$b"
+  if [ -n "${TP_SIGN_APP:-}" ]; then
+    codesign --force --deep --options runtime --timestamp --sign "$TP_SIGN_APP" "$b"
+  else
+    codesign --force --deep --sign - "$b"
+  fi
+  codesign --verify --deep --strict "$b"
 done
 echo "Architectures:"
 lipo -info "$OUT/Tube Player.vst3/Contents/MacOS/Tube Player"
@@ -42,7 +48,11 @@ pkgbuild --root "$PKGW/au" --component-plist "$PKGW/au.plist" --identifier com.b
   --version "$VERSION" --install-location "/Library/Audio/Plug-Ins/Components" --scripts packaging/pkg/scripts "$PKGW/au.pkg"
 sed "s/__VERSION__/$VERSION/g" packaging/pkg/distribution.xml > "$PKGW/distribution.xml"
 for f in packaging/pkg/resources/*.html; do sed "s/__VERSION__/$VERSION/g" "$f" > "$PKGW/resources/$(basename "$f")"; done
-productbuild --distribution "$PKGW/distribution.xml" --resources "$PKGW/resources" --package-path "$PKGW" "dist/Tube Player.pkg"
+# with a "Developer ID Installer" identity in TP_SIGN_INSTALLER the installer itself is signed too
+SIGN_PKG=()
+[ -n "${TP_SIGN_INSTALLER:-}" ] && SIGN_PKG=(--sign "$TP_SIGN_INSTALLER" --timestamp)
+productbuild --distribution "$PKGW/distribution.xml" --resources "$PKGW/resources" --package-path "$PKGW" \
+  ${SIGN_PKG[@]+"${SIGN_PKG[@]}"} "dist/Tube Player.pkg"
 pkgutil --payload-files "dist/Tube Player.pkg" | grep -E "\.(vst3|component)$" || true
 
 # ---------------------------------------------------------------- the zip (install by hand)
