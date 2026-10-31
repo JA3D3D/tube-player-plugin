@@ -1,0 +1,27 @@
+#!/bin/bash
+# Runs as root after the Live helper is copied to /Library/Application Support/AbletonAi.
+# Live only looks for control surface scripts in your User Library, so copy it there, as you.
+SRC="/Library/Application Support/AbletonAi/Remote Scripts/AbletonAi"
+U=$(stat -f%Su /dev/console 2>/dev/null)
+[ -z "$U" ] || [ "$U" = "root" ] && exit 0
+H=$(dscl . -read "/Users/$U" NFSHomeDirectory 2>/dev/null | awk '{print $2}')
+[ -d "$H" ] || exit 0
+
+install_to() {
+  local lib="$1"
+  sudo -u "$U" mkdir -p "$lib/Remote Scripts" || return
+  rm -rf "$lib/Remote Scripts/AbletonAi"
+  sudo -u "$U" cp -R "$SRC" "$lib/Remote Scripts/AbletonAi"
+  echo "AbletonAi helper installed in $lib/Remote Scripts"
+}
+
+# Live's default User Library ...
+install_to "$H/Music/Ableton/User Library"
+# ... and any other User Library location set in Live's preferences
+for cfg in "$H"/Library/Preferences/Ableton/Live\ */Library.cfg; do
+  [ -f "$cfg" ] || continue
+  grep -o 'ProjectPath Value="[^"]*User Library[^"]*"' "$cfg" 2>/dev/null | sed -E 's/.*Value="([^"]*)"/\1/' | while read -r lib; do
+    [ -d "$lib" ] && [ "$lib" != "$H/Music/Ableton/User Library" ] && install_to "$lib"
+  done
+done
+exit 0

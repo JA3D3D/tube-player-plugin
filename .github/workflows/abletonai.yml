@@ -1,0 +1,141 @@
+name: Build AbletonAi
+
+on:
+  push:
+    branches: [main]
+    paths: ["abletonai/**", ".github/workflows/abletonai.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  mac:
+    runs-on: macos-15
+    timeout-minutes: 60
+    env:
+      JUCE_VERSION: "9.0.4"
+      HAVE_SIGNING: ${{ secrets.MACOS_CERTS_P12 != '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Live helper tests (Python, fake Live set)
+        run: |
+          set -o pipefail
+          python3 --version
+          python3 abletonai/live-helper/tests/test_helper.py 2>&1 | tee helper-tests.log
+
+      - name: Get JUCE ${{ env.JUCE_VERSION }}
+        run: git clone --depth 1 --branch "$JUCE_VERSION" https://github.com/juce-framework/JUCE.git JUCE
+
+      - name: "Configure (universal: Apple Silicon + Intel)"
+        run: >
+          cmake -S abletonai -B build-ai -DCMAKE_BUILD_TYPE=Release
+          -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64"
+          -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0
+          -DAI_BUILD_TESTS=ON
+
+      - name: Build
+        run: |
+          set -o pipefail
+          cmake --build build-ai --config Release --parallel 4 2>&1 | tee build-output.log
+
+      - name: Plugin tests (with the real Live helper)
+        run: |
+          set -o pipefail
+          ./build-ai/AbletonAiTests_artefacts/Release/AbletonAiTests 2>&1 | tee plugin-tests.log
+
+      - name: Load signing certificates
+        if: env.HAVE_SIGNING == 'true'
+        env:
+          MACOS_CERTS_P12: ${{ secrets.MACOS_CERTS_P12 }}
+          MACOS_CERTS_PASSWORD: ${{ secrets.MACOS_CERTS_PASSWORD }}
+        run: |
+          KC="$RUNNER_TEMP/signing.keychain-db"; KCPW="$(uuidgen)"
+          echo "$MACOS_CERTS_P12" | base64 --decode > "$RUNNER_TEMP/certs.p12"
+          security create-keychain -p "$KCPW" "$KC"
+          security set-keychain-settings -lut 21600 "$KC"
+          security unlock-keychain -p "$KCPW" "$KC"
+          security import "$RUNNER_TEMP/certs.p12" -k "$KC" -P "$MACOS_CERTS_PASSWORD" -T /usr/bin/codesign -T /usr/bin/productbuild -T /usr/bin/pkgbuild
+          security set-key-partition-list -S apple-tool:,apple: -s -k "$KCPW" "$KC" >/dev/null
+          security list-keychains -d user -s "$KC" $(security list-keychains -d user | tr -d '"')
+          rm "$RUNNER_TEMP/certs.p12"
+          APP_ID=$(security find-identity -v -p codesigning "$KC" | grep "Developer ID Application" | head -1 | sed -E 's/.*"(.*)"/\1/')
+          INST_ID=$(security find-identity -v "$KC" | grep "Developer ID Installer" | head -1 | sed -E 's/.*"(.*)"/\1/')
+          echo "TP_SIGN_APP=$APP_ID" >> "$GITHUB_ENV"
+          echo "TP_SIGN_INSTALLER=$INST_ID" >> "$GITHUB_ENV"
+
+      - name: Package
+        run: |
+          set -o pipefail
+          bash abletonai/scripts/package_mac.sh 2>&1 | tee package.log
+
+      - name: Notarize the installer
+        if: env.HAVE_SIGNING == 'true'
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
+        run: |
+          set -o pipefail
+          xcrun notarytool submit abletonai/dist/AbletonAi.pkg --apple-id "$APPLE_ID" --team-id "$APPLE_TEAM_ID" \
+            --password "$APPLE_APP_PASSWORD" --wait --timeout 30m 2>&1 | tee notarize.log
+          grep -q "status: Accepted" notarize.log
+          xcrun stapler staple abletonai/dist/AbletonAi.pkg | tee -a notarize.log
+
+      # install exactly as on your Mac: plug-ins in /Library, helper in the user's Live User Library
+      - name: Install the .pkg
+        run: |
+          set -o pipefail
+          sudo installer -pkg abletonai/dist/AbletonAi.pkg -target / -verboseR 2>&1 | tail -20 | tee pkg-install.log
+          ls -la /Library/Audio/Plug-Ins/VST3/AbletonAi.vst3/Contents/MacOS /Library/Audio/Plug-Ins/Components/AbletonAi.component/Contents/MacOS | tee -a pkg-install.log
+          ls -la "/Library/Application Support/AbletonAi/Remote Scripts/AbletonAi" | tee -a pkg-install.log
+          # a CI runner has nobody at the console, so do what the postinstall does for a signed-in user
+          LIB="$HOME/Music/Ableton/User Library/Remote Scripts"
+          mkdir -p "$LIB" && cp -R "/Library/Application Support/AbletonAi/Remote Scripts/AbletonAi" "$LIB/"
+          ls -la "$LIB/AbletonAi" | tee -a pkg-install.log
+          python3 -c "import ast,sys; [ast.parse(open(f).read(), f, feature_version=(3,7)) for f in sys.argv[1:]]; print('helper parses on Live 11 Python 3.7')" "$LIB"/AbletonAi/*.py | tee -a pkg-install.log
+
+      - name: Check the Audio Unit with Apple's validator
+        run: |
+          set -o pipefail
+          killall -9 AudioComponentRegistrar || true
+          sleep 3
+          auval -a 2>&1 | grep -i "abletonai" | tee auval.log
+          auval -v aufx Abai Bbtl 2>&1 | tee -a auval.log
+          grep -q "AU VALIDATION SUCCEEDED" auval.log
+
+      - name: Get pluginval
+        run: |
+          curl -sSL -o pluginval.zip https://github.com/Tracktion/pluginval/releases/latest/download/pluginval_macOS.zip
+          unzip -q pluginval.zip
+
+      - name: pluginval (installed VST3)
+        run: |
+          set -o pipefail
+          ./pluginval.app/Contents/MacOS/pluginval --strictness-level 5 --skip-gui-tests --timeout-ms 300000 \
+            --validate /Library/Audio/Plug-Ins/VST3/AbletonAi.vst3 2>&1 | tee pluginval.log
+
+      - name: pluginval with the window open (installed VST3 + AU)
+        continue-on-error: true
+        run: |
+          ./pluginval.app/Contents/MacOS/pluginval --strictness-level 5 --timeout-ms 300000 \
+            --validate /Library/Audio/Plug-Ins/VST3/AbletonAi.vst3 2>&1 | tee pluginval-gui.log
+          ./pluginval.app/Contents/MacOS/pluginval --strictness-level 5 --timeout-ms 300000 \
+            --validate /Library/Audio/Plug-Ins/Components/AbletonAi.component 2>&1 | tee -a pluginval-gui.log
+
+      - name: Publish to the builds-abletonai branch
+        if: always()
+        run: |
+          [ -f abletonai/dist/AbletonAi.pkg ] || echo "no installer this time"
+          grep -iE "warning|error" build-output.log | grep -E "abletonai/(Source|tests)/" > my-warnings.log || true
+          mkdir pub && cd pub
+          git init -q -b builds-abletonai
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp ../abletonai/dist/*.pkg . 2>/dev/null || true
+          mkdir -p logs && cp ../*.log logs/ 2>/dev/null || true
+          { echo "commit: $GITHUB_SHA"; echo "built: $(date -u +%Y-%m-%dT%H:%M:%SZ)"; echo "juce: $JUCE_VERSION"; } > BUILD.txt
+          git add -A
+          git commit -qm "AbletonAi build for $GITHUB_SHA"
+          git push -qf "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" builds-abletonai

@@ -1,0 +1,7 @@
+#!/bin/bash
+# Runs as root after the AbletonAi plug-ins are copied into /Library/Audio/Plug-Ins.
+for b in "/Library/Audio/Plug-Ins/VST3/AbletonAi.vst3" "/Library/Audio/Plug-Ins/Components/AbletonAi.component"; do
+  [ -e "$b" ] && xattr -dr com.apple.quarantine "$b" 2>/dev/null
+done
+killall -9 AudioComponentRegistrar >/dev/null 2>&1   # macOS picks up the new Audio Unit straight away
+exit 0

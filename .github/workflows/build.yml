@@ -3,6 +3,7 @@ name: Build Tube Player
 on:
   push:
     branches: [main]
+    paths-ignore: ["abletonai/**", ".github/workflows/abletonai.yml"]
   workflow_dispatch:
 
 permissions:
