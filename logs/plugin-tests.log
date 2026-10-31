@@ -1,0 +1,34 @@
+ok   page server starts on a local port (51230)
+ok   page address is on 127.0.0.1
+ok   serves the player page
+ok   nothing else is served (404)
+ok   no files from disk
+ok   server shuts down quickly
+ok   recent list: most recent first, with title and position
+ok   recent list survives a restart (saved outside the web view)
+ok   keeps the last 25
+ok   audio passes through untouched
+ok   no latency, no tail
+ok   parameters Live can automate: Play, Volume, Speed, Loop, Follow Live
+ok   speed shows as 0.5x, 1x...
+ok   editor window is resizable
+ok   page gets the parameters when it's ready
+ok   opened video stored in the plugin state
+ok   recent list sent back to the page
+ok   position and title kept
+ok   Play parameter follows the video (Live sees it playing)
+ok   no echo back to the page for changes it made
+ok   speed 0.75x from the page sets the Speed parameter
+ok   loop points stored
+ok   automating Play and Speed in Live reaches the page (pause, 1.5x)
+ok   Live starting playback is passed to the page
+ok   Paste & Load asks the plugin for the clipboard
+ok   window size stored
+ok   video, position, loop restored from the Live set
+ok   parameters restored
+ok   window size restored
+ok   damaged state is ignored
+ok   reopening the window carries on at 0:42 with the loop
+ok   recent list with titles in the page
+ok   Restart with 'forget' empties the recent list
+ALL PLUGIN TESTS PASSED

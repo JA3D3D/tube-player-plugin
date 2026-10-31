@@ -1,0 +1,169 @@
+[  1%] Generating juce_binarydata_TubePlayerResources/JuceLibraryCode/BinaryData1.cpp, juce_binarydata_TubePlayerResources/JuceLibraryCode/BinaryData.h
+[  2%] Building VST3 manifest helper for TubePlayer
+[  2%] Building CXX object CMakeFiles/TubePlayerResources.dir/juce_binarydata_TubePlayerResources/JuceLibraryCode/BinaryData1.cpp.o
+-- The CXX compiler identification is AppleClang 17.0.0.17000013
+-- Detecting CXX compiler ABI info
+[  3%] Linking CXX static library libTubePlayerResources.a
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done (0.7s)
+-- Generating done (0.0s)
+-- Build files have been written to: /Users/runner/work/tube-player-plugin/tube-player-plugin/build/vst3_helpers/TubePlayer
+make[3]: warning: jobserver unavailable: using -j1.  Add `+' to parent make rule.
+[ 50%] Building CXX object CMakeFiles/vst3_helper.dir/Users/runner/work/tube-player-plugin/tube-player-plugin/JUCE/modules/juce_audio_plugin_client/VST3/juce_VST3ManifestHelper.cpp.o
+[  3%] Built target TubePlayerResources
+[  3%] Building CXX object CMakeFiles/TubePlayerTests.dir/Source/PluginProcessor.cpp.o
+[  3%] Building CXX object CMakeFiles/TubePlayer.dir/Source/PluginProcessor.cpp.o
+[  4%] Building CXX object CMakeFiles/TubePlayerTests.dir/tests/PluginTests.cpp.o
+[100%] Linking CXX executable vst3_helper
+[100%] Built target vst3_helper
+[  4%] Built target TubePlayer_vst3_helper
+[  5%] Building CXX object CMakeFiles/TubePlayer.dir/Source/PluginEditor.cpp.o
+[  6%] Building CXX object CMakeFiles/TubePlayer.dir/Source/PageServer.cpp.o
+[  6%] Building CXX object CMakeFiles/TubePlayer.dir/Source/RecentStore.cpp.o
+[  7%] Building CXX object CMakeFiles/TubePlayerTests.dir/Source/PluginEditor.cpp.o
+[  8%] Building OBJCXX object CMakeFiles/TubePlayer.dir/Source/TubeWebView_mac.mm.o
+[  9%] Building OBJCXX object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_audio_processors/juce_audio_processors.mm.o
+[ 10%] Building OBJCXX object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_gui_extra/juce_gui_extra.mm.o
+[ 11%] Building CXX object CMakeFiles/TubePlayerTests.dir/Source/PageServer.cpp.o
+[ 12%] Building CXX object CMakeFiles/TubePlayerTests.dir/Source/RecentStore.cpp.o
+[ 12%] Building CXX object CMakeFiles/TubePlayerTests.dir/Source/TubeWebView_stub.cpp.o
+[ 13%] Building OBJCXX object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_audio_processors/juce_audio_processors.mm.o
+[ 13%] Building CXX object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_gui_basics/juce_gui_basics_2.cpp.o
+[ 14%] Building CXX object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_gui_basics/juce_gui_basics_3.cpp.o
+[ 15%] Building OBJCXX object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_gui_extra/juce_gui_extra.mm.o
+[ 15%] Building CXX object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_gui_basics/juce_gui_basics_2.cpp.o
+[ 16%] Building CXX object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_gui_basics/juce_gui_basics_3.cpp.o
+[ 17%] Building CXX object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_gui_basics/juce_gui_basics_4.cpp.o
+[ 17%] Building CXX object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_gui_basics/juce_gui_basics_5.cpp.o
+[ 18%] Building OBJCXX object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_gui_basics/juce_gui_basics.mm.o
+[ 19%] Building CXX object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_gui_basics/juce_gui_basics_4.cpp.o
+[ 20%] Building CXX object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_gui_basics/juce_gui_basics_5.cpp.o
+[ 21%] Building CXX object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.o
+[ 21%] Building OBJCXX object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_gui_basics/juce_gui_basics.mm.o
+[ 22%] Building C object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_graphics/juce_graphics_Sheenbidi.c.o
+[ 23%] Building CXX object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.o
+[ 24%] Building C object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_graphics/juce_graphics_Sheenbidi.c.o
+[ 24%] Building C object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_graphics/juce_graphics_libjpg_1.c.o
+[ 24%] Building C object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_graphics/juce_graphics_libjpg_1.c.o
+[ 25%] Building C object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_graphics/juce_graphics_libjpg_2.c.o
+[ 26%] Building C object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_graphics/juce_graphics_libjpg_2.c.o
+[ 27%] Building C object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_graphics/juce_graphics_libjpg_3.c.o
+[ 28%] Building C object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_graphics/juce_graphics_libjpg_3.c.o
+[ 29%] Building C object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_graphics/juce_graphics_libpng.c.o
+[ 29%] Building C object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_graphics/juce_graphics_libpng.c.o
+[ 29%] Building C object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_graphics/juce_graphics_libwebp_dec.c.o
+[ 30%] Building C object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_graphics/juce_graphics_libwebp_dec.c.o
+[ 31%] Building C object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_graphics/juce_graphics_libwebp_dsp_dec.c.o
+[ 32%] Building C object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_graphics/juce_graphics_libwebp_dsp_dec_avx2.c.o
+[ 33%] Building C object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_graphics/juce_graphics_libwebp_dsp_dec.c.o
+[ 34%] Building C object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_graphics/juce_graphics_libwebp_dsp_dec_avx2.c.o
+[ 34%] Building C object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_graphics/juce_graphics_libwebp_dsp_dec_sse41.c.o
+[ 35%] Building C object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_graphics/juce_graphics_libwebp_dsp_enc.c.o
+[ 36%] Building C object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_graphics/juce_graphics_libwebp_dsp_enc_avx2.c.o
+[ 36%] Building C object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_graphics/juce_graphics_libwebp_dsp_dec_sse41.c.o
+[ 37%] Building C object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_graphics/juce_graphics_libwebp_dsp_enc.c.o
+[ 37%] Building C object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_graphics/juce_graphics_libwebp_dsp_enc_sse41.c.o
+[ 38%] Building C object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_graphics/juce_graphics_libwebp_dsp_enc_avx2.c.o
+[ 39%] Building C object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_graphics/juce_graphics_libwebp_dsp_enc_sse41.c.o
+[ 40%] Building C object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_graphics/juce_graphics_libwebp_enc.c.o
+[ 41%] Building C object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_graphics/juce_graphics_libwebp_sharpyuv.c.o
+[ 41%] Building C object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_graphics/juce_graphics_libwebp_enc.c.o
+[ 42%] Building C object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_graphics/juce_graphics_libwebp_sharpyuv.c.o
+[ 43%] Building C object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_graphics/juce_graphics_libwebp_utils.c.o
+[ 43%] Building C object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_graphics/juce_graphics_lunasvg.c.o
+[ 44%] Building OBJCXX object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_graphics/juce_graphics.mm.o
+[ 45%] Building OBJCXX object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_events/juce_events.mm.o
+[ 46%] Building C object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_graphics/juce_graphics_libwebp_utils.c.o
+[ 46%] Building C object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_graphics/juce_graphics_lunasvg.c.o
+[ 47%] Building OBJCXX object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_graphics/juce_graphics.mm.o
+[ 47%] Building CXX object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_core/juce_core_CompilationTime.cpp.o
+[ 48%] Building OBJCXX object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_events/juce_events.mm.o
+[ 49%] Building C object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_core/juce_core_zlib.c.o
+[ 50%] Building OBJCXX object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_core/juce_core.mm.o
+[ 51%] Building CXX object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_core/juce_core_CompilationTime.cpp.o
+[ 52%] Building OBJCXX object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_data_structures/juce_data_structures.mm.o
+[ 52%] Building C object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_core/juce_core_zlib.c.o
+[ 52%] Building CXX object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_audio_processors_headless/juce_audio_processors_headless_ara.cpp.o
+[ 53%] Building OBJCXX object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_core/juce_core.mm.o
+[ 54%] Building CXX object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_audio_processors_headless/juce_audio_processors_headless_lv2_libs.cpp.o
+[ 55%] Building OBJCXX object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_audio_processors_headless/juce_audio_processors_headless.mm.o
+[ 56%] Building OBJCXX object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_data_structures/juce_data_structures.mm.o
+[ 56%] Building OBJCXX object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_audio_basics/juce_audio_basics.mm.o
+[ 56%] Building CXX object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_audio_processors_headless/juce_audio_processors_headless_ara.cpp.o
+[ 57%] Building CXX object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_audio_processors_headless/juce_audio_processors_headless_lv2_libs.cpp.o
+[ 58%] Building OBJCXX object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_audio_utils/juce_audio_utils.mm.o
+[ 59%] Building C object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_audio_formats/juce_audio_formats_flac_1.c.o
+[ 60%] Building OBJCXX object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_audio_processors_headless/juce_audio_processors_headless.mm.o
+[ 61%] Building OBJCXX object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_audio_basics/juce_audio_basics.mm.o
+[ 61%] Building OBJCXX object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_audio_utils/juce_audio_utils.mm.o
+[ 62%] Building C object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_audio_formats/juce_audio_formats_flac_2.c.o
+[ 62%] Building C object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_audio_formats/juce_audio_formats_ogg.c.o
+[ 63%] Building C object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_audio_formats/juce_audio_formats_opus.c.o
+[ 64%] Building C object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_audio_formats/juce_audio_formats_opusfile.c.o
+[ 65%] Building C object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_audio_formats/juce_audio_formats_flac_1.c.o
+[ 66%] Building C object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_audio_formats/juce_audio_formats_flac_2.c.o
+[ 66%] Building OBJCXX object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_audio_formats/juce_audio_formats.mm.o
+[ 66%] Building C object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_audio_formats/juce_audio_formats_ogg.c.o
+[ 67%] Building C object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_audio_formats/juce_audio_formats_opus.c.o
+[ 68%] Building OBJCXX object CMakeFiles/TubePlayer.dir/JUCE/modules/juce_audio_devices/juce_audio_devices.mm.o
+[ 69%] Building C object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_audio_formats/juce_audio_formats_opusfile.c.o
+[ 70%] Building OBJCXX object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_audio_formats/juce_audio_formats.mm.o
+[ 70%] Building OBJCXX object CMakeFiles/TubePlayerTests.dir/JUCE/modules/juce_audio_devices/juce_audio_devices.mm.o
+[ 71%] Linking CXX static library "TubePlayer_artefacts/Release/libTube Player_SharedCode.a"
+[ 71%] Built target TubePlayer
+[ 72%] Generating TubePlayer_artefacts/JuceLibraryCode/TubePlayer_Standalone/PkgInfo
+[ 73%] Generating TubePlayer_artefacts/JuceLibraryCode/TubePlayer_AU/PkgInfo
+[ 73%] Building CXX object CMakeFiles/TubePlayer_AU.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX_utils.cpp.o
+[ 74%] Building CXX object CMakeFiles/TubePlayer_Standalone.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX_utils.cpp.o
+[ 74%] Building CXX object CMakeFiles/TubePlayer_Standalone.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_ARA.cpp.o
+[ 75%] Building CXX object CMakeFiles/TubePlayer_AU.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_ARA.cpp.o
+[ 77%] Building CXX object CMakeFiles/TubePlayer_AU.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_Standalone.cpp.o
+[ 77%] Building CXX object CMakeFiles/TubePlayer_Standalone.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_Standalone.cpp.o
+[ 78%] Building CXX object CMakeFiles/TubePlayer_AU.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_Unity.cpp.o
+[ 78%] Building OBJCXX object CMakeFiles/TubePlayer_AU.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX.mm.o
+[ 79%] Building OBJCXX object CMakeFiles/TubePlayer_AU.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_AU_1.mm.o
+[ 79%] Generating TubePlayer_artefacts/JuceLibraryCode/TubePlayer_VST3/PkgInfo
+[ 80%] Building CXX object CMakeFiles/TubePlayer_VST3.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX_utils.cpp.o
+[ 81%] Building CXX object CMakeFiles/TubePlayer_VST3.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_ARA.cpp.o
+[ 81%] Building CXX object CMakeFiles/TubePlayer_VST3.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_Standalone.cpp.o
+[ 82%] Building CXX object CMakeFiles/TubePlayer_Standalone.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_Unity.cpp.o
+[ 83%] Building CXX object CMakeFiles/TubePlayer_VST3.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_Unity.cpp.o
+[ 84%] Building OBJCXX object CMakeFiles/TubePlayer_Standalone.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX.mm.o
+[ 85%] Building OBJCXX object CMakeFiles/TubePlayer_VST3.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX.mm.o
+[ 85%] Building OBJCXX object CMakeFiles/TubePlayer_Standalone.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_AU_1.mm.o
+[ 86%] Building OBJCXX object CMakeFiles/TubePlayer_VST3.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_AU_1.mm.o
+[ 87%] Building OBJCXX object CMakeFiles/TubePlayer_Standalone.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_AU_2.mm.o
+[ 87%] Building OBJCXX object CMakeFiles/TubePlayer_VST3.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_AU_2.mm.o
+[ 88%] Building OBJCXX object CMakeFiles/TubePlayer_VST3.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_AUv3.mm.o
+[ 89%] Building OBJCXX object CMakeFiles/TubePlayer_Standalone.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_AUv3.mm.o
+[ 90%] Building OBJCXX object CMakeFiles/TubePlayer_VST3.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_LV2.mm.o
+[ 90%] Building OBJCXX object CMakeFiles/TubePlayer_Standalone.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_LV2.mm.o
+[ 90%] Building OBJCXX object CMakeFiles/TubePlayer_VST3.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST2.mm.o
+[ 91%] Building OBJCXX object CMakeFiles/TubePlayer_Standalone.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST2.mm.o
+[ 92%] Building OBJCXX object CMakeFiles/TubePlayer_VST3.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.mm.o
+[ 93%] Building OBJCXX object CMakeFiles/TubePlayer_Standalone.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.mm.o
+Copying OS X content TubePlayer_artefacts/Release/Standalone/Tube Player.app/Contents/Resources/AppIcon.icns
+Copying OS X content TubePlayer_artefacts/Release/Standalone/Tube Player.app/Contents/Resources/RecentFilesMenuTemplate.nib
+[ 94%] Linking CXX executable "TubePlayer_artefacts/Release/Standalone/Tube Player.app/Contents/MacOS/Tube Player"
+[ 95%] Building OBJCXX object CMakeFiles/TubePlayer_AU.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_AU_2.mm.o
+[ 96%] Linking CXX executable TubePlayerTests_artefacts/Release/TubePlayerTests
+[ 96%] Built target TubePlayerTests
+[ 96%] Building OBJCXX object CMakeFiles/TubePlayer_AU.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_AUv3.mm.o
+[ 97%] Building OBJCXX object CMakeFiles/TubePlayer_AU.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_LV2.mm.o
+Copying OS X content TubePlayer_artefacts/Release/VST3/Tube Player.vst3/Contents/Resources/AppIcon.icns
+[ 98%] Building OBJCXX object CMakeFiles/TubePlayer_AU.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST2.mm.o
+[ 99%] Building OBJCXX object CMakeFiles/TubePlayer_AU.dir/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.mm.o
+Copying OS X content TubePlayer_artefacts/Release/AU/Tube Player.component/Contents/Resources/AppIcon.icns
+[ 99%] Linking CXX CFBundle shared module "TubePlayer_artefacts/Release/AU/Tube Player.component/Contents/MacOS/Tube Player"
+[100%] Linking CXX CFBundle shared module "TubePlayer_artefacts/Release/VST3/Tube Player.vst3/Contents/MacOS/Tube Player"
+[100%] Built target TubePlayer_Standalone
+[100%] Built target TubePlayer_AU
+/Users/runner/work/tube-player-plugin/tube-player-plugin/build/TubePlayer_artefacts/Release/VST3/Tube Player.vst3: code object is not signed at all
+-- Replacing invalid signature with ad-hoc signature
+/Users/runner/work/tube-player-plugin/tube-player-plugin/build/TubePlayer_artefacts/Release/VST3/Tube Player.vst3: replacing existing signature
+removing moduleinfo.json
+creating /Users/runner/work/tube-player-plugin/tube-player-plugin/build/TubePlayer_artefacts/Release/VST3/Tube Player.vst3/Contents/Resources/moduleinfo.json
+[100%] Built target TubePlayer_VST3

@@ -1,0 +1,15 @@
+installer: Package name is Tube Player
+installer: Installing at base path /
+installer: The install was successful.
+/Library/Audio/Plug-Ins/Components/Tube Player.component/Contents/MacOS:
+total 34728
+drwxr-xr-x  3 root  wheel        96 Oct 31 18:23 .
+drwxr-xr-x  7 root  wheel       224 Oct 31 18:23 ..
+-rwxr-xr-x  1 root  wheel  17779392 Oct 31 18:23 Tube Player
+
+/Library/Audio/Plug-Ins/VST3/Tube Player.vst3/Contents/MacOS:
+total 35960
+drwxr-xr-x  3 root  wheel        96 Oct 31 18:23 .
+drwxr-xr-x  7 root  wheel       224 Oct 31 18:23 ..
+-rwxr-xr-x  1 root  wheel  18411312 Oct 31 18:23 Tube Player
+quarantine flags: 0
