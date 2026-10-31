@@ -1,0 +1,43 @@
+installer: Package name is AbletonAi
+installer: Installing at base path /
+installer:PHASE:Preparing for installation…
+installer:PHASE:Preparing the disk…
+installer:PHASE:Preparing AbletonAi…
+installer:PHASE:Waiting for other installations to complete…
+installer:PHASE:Configuring the installation…
+installer:STATUS:
+installer:%81.973619
+installer:PHASE:Running package scripts…
+installer:PHASE:Validating packages…
+installer:%97.750000
+installer:STATUS:Running installer actions…
+installer:STATUS:
+installer:PHASE:Finishing the Installation…
+installer:STATUS:
+installer:%100.000000
+installer:PHASE:The software was successfully installed.
+installer: The install was successful.
+/Library/Audio/Plug-Ins/Components/AbletonAi.component/Contents/MacOS:
+total 34656
+drwxr-xr-x  3 root  wheel        96 Oct 31 18:21 .
+drwxr-xr-x  7 root  wheel       224 Oct 31 18:21 ..
+-rwxr-xr-x  1 root  wheel  17743536 Oct 31 18:21 AbletonAi
+
+/Library/Audio/Plug-Ins/VST3/AbletonAi.vst3/Contents/MacOS:
+total 35928
+drwxr-xr-x  3 root  wheel        96 Oct 31 18:21 .
+drwxr-xr-x  7 root  wheel       224 Oct 31 18:21 ..
+-rwxr-xr-x  1 root  wheel  18392080 Oct 31 18:21 AbletonAi
+total 72
+-rw-r--r--  1 root  wheel   1602 Oct 31 18:21 __init__.py
+drwxr-xr-x  5 root  wheel    160 Oct 31 18:21 .
+drwxr-xr-x  3 root  wheel     96 Oct 31 18:21 ..
+-rw-r--r--  1 root  wheel  24021 Oct 31 18:21 core.py
+-rw-r--r--  1 root  wheel   6436 Oct 31 18:21 server.py
+total 72
+-rw-r--r--  1 runner  staff   1602 Oct 31 18:21 __init__.py
+drwxr-xr-x  5 runner  staff    160 Oct 31 18:21 .
+drwxr-xr-x  3 runner  staff     96 Oct 31 18:21 ..
+-rw-r--r--  1 runner  staff  24021 Oct 31 18:21 core.py
+-rw-r--r--  1 runner  staff   6436 Oct 31 18:21 server.py
+helper parses on Live 11 Python 3.7

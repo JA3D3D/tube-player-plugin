@@ -1,0 +1,27 @@
+ok   the built page has the AI tools inside it (one self-contained file)
+ok   settings saved
+ok   settings file readable only by you
+ok   settings load back
+ok   unknown model falls back to Balanced
+ok   with Live's helper off, requests fail with how to switch it on
+ok   status: not connected
+ok   the helper starts and writes where to find it
+ok   connects and sees Live 11.3.35 (the green dot)
+ok   four requests answered in order
+ok   create_track in the set
+ok   write_clip wrote 8 notes
+ok   notes read back, with non-English characters intact
+ok   Live's refusal comes back as a readable error
+ok   a 2000-note clip goes through in one request
+ok   window is resizable
+ok   page gets your key and model
+ok   Settings saves through the plugin
+ok   a page request reaches Live and comes back
+ok   with the request number and Live's answer
+ok   status pushed to the page when Live connects
+ok   the conversation is saved with the Live set
+ok   window size saved with the set
+ok   reopening the window shows the conversation
+ok   audio passes through untouched
+ok   when Live closes, the helper removes its address
+ALL PLUGIN TESTS PASSED

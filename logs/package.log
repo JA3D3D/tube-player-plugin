@@ -1,0 +1,25 @@
+../build-ai/pkg/vst3/AbletonAi.vst3: replacing existing signature
+../build-ai/pkg/au/AbletonAi.component: replacing existing signature
+Architectures in the fat file: ../build-ai/pkg/vst3/AbletonAi.vst3/Contents/MacOS/AbletonAi are: x86_64 arm64 
+pkgbuild: Inferring bundle components from contents of ../build-ai/pkg/vst3
+pkgbuild: Writing new component property list to ../build-ai/pkg/vst3.plist
+pkgbuild: Inferring bundle components from contents of ../build-ai/pkg/au
+pkgbuild: Writing new component property list to ../build-ai/pkg/au.plist
+pkgbuild: Reading components from ../build-ai/pkg/vst3.plist
+pkgbuild: Adding component at AbletonAi.vst3
+pkgbuild: Adding top-level postinstall script
+pkgbuild: Wrote package to ../build-ai/pkg/vst3.pkg
+pkgbuild: Reading components from ../build-ai/pkg/au.plist
+pkgbuild: Adding component at AbletonAi.component
+pkgbuild: Adding top-level postinstall script
+pkgbuild: Wrote package to ../build-ai/pkg/au.pkg
+pkgbuild: Inferring bundle components from contents of ../build-ai/pkg/helper
+pkgbuild: Adding top-level postinstall script
+pkgbuild: Wrote package to ../build-ai/pkg/helper.pkg
+productbuild: Wrote product to dist/AbletonAi.pkg
+productbuild: Supported OS versions: [Min: 11.0, Before: None]
+./AbletonAi.vst3
+total 28488
+drwxr-xr-x   3 runner  staff        96 Oct 31 18:21 .
+drwxr-xr-x  12 runner  staff       384 Oct 31 18:21 ..
+-rw-r--r--   1 runner  staff  14583415 Oct 31 18:21 AbletonAi.pkg

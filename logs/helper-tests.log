@@ -1,0 +1,21 @@
+test_arrange (__main__.CommandsTest.test_arrange) ... ok
+test_batch_and_unknown (__main__.CommandsTest.test_batch_and_unknown) ... ok
+test_browser_search_and_load (__main__.CommandsTest.test_browser_search_and_load) ... ok
+test_clip_errors (__main__.CommandsTest.test_clip_errors) ... ok
+test_create_track (__main__.CommandsTest.test_create_track) ... ok
+test_device_params (__main__.CommandsTest.test_device_params) ... ok
+test_drum_pads (__main__.CommandsTest.test_drum_pads) ... ok
+test_list_browser (__main__.CommandsTest.test_list_browser) ... ok
+test_mixer_scenes_transport (__main__.CommandsTest.test_mixer_scenes_transport) ... ok
+test_new_set_is_followed (__main__.CommandsTest.test_new_set_is_followed) ... ok
+test_ping_and_session (__main__.CommandsTest.test_ping_and_session) ... ok
+test_slot_beyond_scenes_adds_scenes (__main__.CommandsTest.test_slot_beyond_scenes_adds_scenes) ... ok
+test_tempo (__main__.CommandsTest.test_tempo) ... ok
+test_write_and_read_clip (__main__.CommandsTest.test_write_and_read_clip) ... ok
+test_round_trip (__main__.ServerTest.test_round_trip) ... ok
+test_second_helper_takes_next_port_and_cleanup (__main__.ServerTest.test_second_helper_takes_next_port_and_cleanup) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.184s
+
+OK
